@@ -4,8 +4,15 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  base: '/rap-sheet-finder/',
+
   plugins: [react(), tailwindcss()],
-  server: { port: 5173, strictPort: false },
+
+  server: {
+    port: 5173,
+    strictPort: false,
+  },
+
   test: {
     environment: 'jsdom',
     globals: true,

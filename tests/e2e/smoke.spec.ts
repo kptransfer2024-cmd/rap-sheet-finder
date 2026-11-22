@@ -26,7 +26,7 @@ test.describe('Rap Sheet Finder smoke', () => {
       const host = new URL(r.url()).hostname;
       if (host !== 'localhost' && host !== '127.0.0.1') foreign.push(r.url());
     });
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText("Let's find the easiest practical next step.");
     await page.locator('[data-persona="A"]').click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your plan');
@@ -35,7 +35,7 @@ test.describe('Rap Sheet Finder smoke', () => {
   });
 
   test('keyboard-only: Example 1 reaches the index route', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     const tabUntil = async (pred: () => Promise<boolean>) => {
       for (let i = 0; i < 60; i++) {
         await page.keyboard.press('Tab');
@@ -75,7 +75,7 @@ test.describe('Rap Sheet Finder smoke', () => {
 
   test('every external link on every example plan is an official site', async ({ page }) => {
     for (const persona of 'ABCDEFGHIJKL'.split('')) {
-      await page.goto('/');
+      await page.goto('./');
       await page.locator(`[data-persona="${persona}"]`).click();
       const hrefs = await page.locator('main a[href^="http"]').evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).href));
       for (const h of hrefs) {
@@ -87,7 +87,7 @@ test.describe('Rap Sheet Finder smoke', () => {
   });
 
   test('print view hides answers and controls, keeps steps and the legal notice', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await page.locator('[data-persona="K"]').click();
     await page.emulateMedia({ media: 'print' });
     await expect(page.getByRole('button', { name: /Print/ })).toBeHidden();
@@ -100,20 +100,20 @@ test.describe('Rap Sheet Finder smoke', () => {
 
   test('no horizontal scrolling at phone width', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 760 });
-    await page.goto('/');
+    await page.goto('./');
     const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(await overflow()).toBeLessThanOrEqual(0);
     await page.getByRole('button', { name: /Start — it's my own record/ }).click();
     expect(await overflow()).toBeLessThanOrEqual(0);
     for (const persona of ['A', 'F', 'J']) {
-      await page.goto('/');
+      await page.goto('./');
       await page.locator(`[data-persona="${persona}"]`).click();
       expect(await overflow(), persona).toBeLessThanOrEqual(0);
     }
   });
 
   test('glossary dialog opens and closes with Escape', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /Words to know/ }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.keyboard.press('Escape');
@@ -121,7 +121,7 @@ test.describe('Rap Sheet Finder smoke', () => {
   });
 
   test('high contrast and larger text toggles apply', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /High contrast/ }).click();
     await page.getByRole('button', { name: /Larger text/ }).click();
     await expect(page.locator('html')).toHaveAttribute('data-contrast', 'high');
@@ -129,7 +129,7 @@ test.describe('Rap Sheet Finder smoke', () => {
   });
 
   test('refresh discards answers (no persistence)', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await page.locator('[data-persona="B"]').click();
     await page.reload();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText("Let's find the easiest practical next step.");

@@ -1,7 +1,7 @@
 // Captures UI screenshots into docs/screenshots. Usage: node scripts/screenshots.mjs [baseUrl]
 import { chromium } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
-const base = process.argv[2] ?? 'http://localhost:4173';
+const base = process.argv[2] ?? 'http://localhost:4173/rap-sheet-finder/';
 const out = 'docs/screenshots';
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();

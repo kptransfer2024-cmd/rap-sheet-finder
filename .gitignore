@@ -5,3 +5,12 @@ playwright-report
 .env
 .env.local
 *.log
+.env.*
+!.env.example
+*.pem
+*.key
+coverage
+.vite
+.DS_Store
+Thumbs.db
+*.tsbuildinfo

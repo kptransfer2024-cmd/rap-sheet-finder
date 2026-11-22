@@ -1,6 +1,6 @@
 // Dev helper: reports elements wider than a 360px viewport for each persona result.
 import { chromium } from '@playwright/test';
-const base = process.argv[2] ?? 'http://localhost:4173';
+const base = process.argv[2] ?? 'http://localhost:4173/rap-sheet-finder/';
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 360, height: 780 } });
 p.setDefaultTimeout(15000);
